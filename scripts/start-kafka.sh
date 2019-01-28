@@ -8,12 +8,6 @@
 # * LOG_RETENTION_BYTES: configure the size at which segments are pruned from the log, (default is 1073741824, for 1GB)
 # * NUM_PARTITIONS: configure the default number of log partitions per topic
 
-# Configure advertised host/port if we run in helios
-if [ ! -z "$HELIOS_PORT_kafka" ]; then
-    ADVERTISED_HOST=`echo $HELIOS_PORT_kafka | cut -d':' -f 1 | xargs -n 1 dig +short | tail -n 1`
-    ADVERTISED_PORT=`echo $HELIOS_PORT_kafka | cut -d':' -f 2`
-fi
-
 # Set the external host and port
 if [ ! -z "$ADVERTISED_HOST" ]; then
     echo "advertised host: $ADVERTISED_HOST"
@@ -68,7 +62,7 @@ fi
 # Enable/disable auto creation of topics
 if [ ! -z "$AUTO_CREATE_TOPICS" ]; then
     echo "auto.create.topics.enable: $AUTO_CREATE_TOPICS"
-    echo "auto.create.topics.enable=$AUTO_CREATE_TOPICS" >> $KAFKA_HOME/config/server.properties
+    echo "\nauto.create.topics.enable=$AUTO_CREATE_TOPICS" >> $KAFKA_HOME/config/server.properties
 fi
 
 # Run Kafka
