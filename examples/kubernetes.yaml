@@ -35,12 +35,20 @@ spec:
       labels:
         app.kubernetes.io/name: kafka
     spec:
+      automountServiceAccountToken: false
       containers:
       - name: kafka
         image: nuvo/docker-kafka:latest
+        imagePullPolicy: Never
         env:
         - name: AUTO_CREATE_TOPICS
           value: "true"
+        - name: ADVERTISED_PORT
+          value: "9092"
+        - name: ADVERTISED_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         ports:
         - name: kafka
           containerPort: 9092
