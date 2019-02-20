@@ -39,7 +39,7 @@ spec:
       containers:
       - name: kafka
         image: nuvo/docker-kafka:latest
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         env:
         - name: AUTO_CREATE_TOPICS
           value: "true"
